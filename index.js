@@ -1,3 +1,3 @@
-import text from './src/text.js'
+import { sayHello } from './src/say.js'
 
-console.log(text)
+sayHello()

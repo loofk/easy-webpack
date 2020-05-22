@@ -28,14 +28,15 @@ class Compile {
     const info = this.build(this.entry)
     this.modules.push(info)
 
-    // 递归解析所有依赖项
-    this.modules.forEach(({ dependecies }) => {
+    // 递归解析所有依赖项，不能使用forEach遍历，否则无法遍历到新增的模块
+    for (let i = 0; i < this.modules.length; i++) {
+      const { dependecies } = this.modules[i]
       if (dependecies) {
-        for (const dependecy in dependecies) {
-          this.modules.push(this.build(dependecies[dependecy]))
-        }
+        Object.values(dependecies).forEach(dependecy => {
+          this.modules.push(this.build(dependecy))
+        })
       }
-    })
+    }
 
     // 生成依赖关系图
     const dependecyGraph = this.modules.reduce((graph, item) => {
@@ -66,7 +67,7 @@ class Compile {
         }
 
         var exports = {}
-        (function (require, exports, code) {
+        ;(function (require, exports, code) {
           eval(code)
         })(localRequire, exports, graph[module].code)
 

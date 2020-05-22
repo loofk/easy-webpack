@@ -20,7 +20,7 @@ module.exports = {
       ImportDeclaration ({ node }) {
         const dirname = path.dirname(filename)
         // 完整的import路径
-        const filePath = path.join(dirname, node.source.value)
+        const filePath = './' + path.join(dirname, node.source.value)
         dependecies[node.source.value] = filePath
       }
     })
