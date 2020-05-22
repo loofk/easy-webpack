@@ -19,7 +19,7 @@ module.exports = {
       // 找到import语句
       ImportDeclaration ({ node }) {
         const dirname = path.dirname(filename)
-        // 完整的import路径
+        // 完整的import路径，可以无视不同系统下/\的路径分隔符的差异
         const filePath = './' + path.join(dirname, node.source.value)
         dependecies[node.source.value] = filePath
       }

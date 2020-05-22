@@ -60,6 +60,11 @@ class Compile {
     }
     const filePath = path.join(this.output.path, this.output.filename)
 
+    /**
+     * 这里实现的是一个require函数，它的作用是执行其参数指定的文件代码
+     * 经过babel转化后的代码有这几个特点，使用exports对象保存不同模块的导出函数、变量、对象；使用require函数获取exports对象中需要的模块
+     * 所以我们要实现这个require函数并且维护一个持久化的exports变量
+     */
     const bundle = `(function (graph) {
       function require (module) {
         function localRequire (relativePath) {
